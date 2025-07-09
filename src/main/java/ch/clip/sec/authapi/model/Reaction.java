@@ -1,4 +1,4 @@
-package Model;
+package ch.clip.sec.authapi.model;
 
 import jakarta.persistence.*;
 import lombok.*;

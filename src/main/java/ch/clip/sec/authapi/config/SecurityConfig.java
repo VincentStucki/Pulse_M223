@@ -3,6 +3,7 @@ package ch.clip.sec.authapi.config;
 import ch.clip.sec.authapi.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -39,6 +40,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Example: Disable CSRF for stateless APIs
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public/**", "/auth/**").permitAll() // Allow public access
+                        .requestMatchers(HttpMethod.POST, "/api/**").authenticated()
                         .anyRequest().authenticated() // Require authentication for all other requests
                 )
                 .sessionManagement(session ->

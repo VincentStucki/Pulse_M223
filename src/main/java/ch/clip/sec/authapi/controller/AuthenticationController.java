@@ -7,7 +7,10 @@ import ch.clip.sec.authapi.service.AuthenticationService;
 import ch.clip.sec.authapi.service.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RequestMapping("/auth")
 @RestController
@@ -54,6 +57,12 @@ public class AuthenticationController {
         log.info("Health check endpoint hit");
         return ResponseEntity.ok("Authentication service is running");
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<String> getMe(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(user.getEmail());
+    }
+
 
 
 }
