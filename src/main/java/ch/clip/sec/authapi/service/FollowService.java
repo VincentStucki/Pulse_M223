@@ -4,6 +4,7 @@ import ch.clip.sec.authapi.model.Follow;
 import ch.clip.sec.authapi.model.User;
 import ch.clip.sec.authapi.repo.FollowRepository;
 import ch.clip.sec.authapi.repo.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class FollowService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Optional<Follow> follow(User follower, Long followedId) {
         Optional<User> followedOpt = userRepository.findById(followedId);
         if (followedOpt.isEmpty() || follower.getId() == followedId) {
@@ -40,6 +42,7 @@ public class FollowService {
         return Optional.of(followRepository.save(follow));
     }
 
+    @Transactional
     public boolean unfollow(User follower, Long followedId) {
         Optional<User> followedOpt = userRepository.findById(followedId);
         if (followedOpt.isEmpty()) {
